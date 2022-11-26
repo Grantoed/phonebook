@@ -1,6 +1,12 @@
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { remove, changeFilter } from 'redux/slices';
-import { getContactsValue, getFilterValue } from 'redux/selectors';
+import { changeFilter } from 'redux/slices';
+import { fetch, remove } from 'redux/operations';
+import {
+  selectVisibleContacts,
+  selectIsLoading,
+  selectFilter,
+} from 'redux/selectors';
 import {
   ContactsList,
   ContactsItem,
@@ -8,13 +14,17 @@ import {
   FilterInput,
   DeleteBtn,
 } from './Contacts.styled';
-import { nanoid } from 'nanoid';
 
 export const Contacts = () => {
-  const filterValue = useSelector(getFilterValue);
-  const contactsArray = useSelector(getContactsValue);
+  const contacts = useSelector(selectVisibleContacts);
+  const filter = useSelector(selectFilter);
+  const isLoading = useSelector(selectIsLoading);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetch());
+  }, [dispatch]);
 
   const deleteContact = contactId => {
     dispatch(remove(contactId));
@@ -24,15 +34,6 @@ export const Contacts = () => {
     dispatch(changeFilter(e.currentTarget.value));
   };
 
-  const handleFilter = () => {
-    const normalizedFilter = filterValue.toLowerCase().trim();
-    return contactsArray.filter(contact =>
-      contact.name.toLowerCase().includes(normalizedFilter)
-    );
-  };
-
-  const visibleContacts = handleFilter();
-
   return (
     <>
       <FilterLabel htmlFor="filter">Find contacts by name</FilterLabel>
@@ -40,18 +41,16 @@ export const Contacts = () => {
         type="text"
         id="filter"
         name="filter"
-        value={filterValue}
+        value={filter}
         onChange={handleChange}
       />
+      {isLoading && <div>Loading...</div>}
       <ContactsList>
-        {visibleContacts.map(contactItem => {
+        {contacts.map(({ name, phone, id }) => {
           return (
-            <ContactsItem key={nanoid(4)}>
-              {contactItem.name}: {contactItem.number}
-              <DeleteBtn
-                type="button"
-                onClick={() => deleteContact(contactItem.id)}
-              >
+            <ContactsItem key={id}>
+              {name}: {phone}
+              <DeleteBtn type="button" onClick={() => deleteContact(id)}>
                 Delete
               </DeleteBtn>
             </ContactsItem>

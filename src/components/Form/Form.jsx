@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { add } from 'redux/slices';
-import { getContactsValue } from 'redux/selectors';
+import { add } from 'redux/operations';
+import { selectContacts } from 'redux/selectors';
 import { Box } from 'components/Box';
 
 import {
@@ -11,13 +11,13 @@ import {
 } from './Form.styled';
 
 export const Form = () => {
-  const contactsArray = useSelector(getContactsValue);
+  const contactsArray = useSelector(selectContacts);
 
   const dispatch = useDispatch();
 
   const addContact = e => {
     e.preventDefault();
-    const { name, number } = e.target.elements;
+    const { name, phone } = e.target.elements;
     const isContactAdded = contactsArray.some(
       contact => contact.name === name.value
     );
@@ -25,7 +25,7 @@ export const Form = () => {
     if (isContactAdded) {
       alert(`${name.value} is Already in contacts`);
     } else {
-      dispatch(add(name.value, number.value));
+      dispatch(add({ name: name.value, phone: phone.value }));
     }
     e.currentTarget.reset();
   };
@@ -44,14 +44,14 @@ export const Form = () => {
         />
       </Box>
       <Box dispay="flex" flexDirection="column" mb="20px">
-        <ContactLabel htmlFor="number">Number</ContactLabel>
+        <ContactLabel htmlFor="phone">Phone</ContactLabel>
         <ContactInput
           type="tel"
-          name="number"
+          name="phone"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-          title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+          title="Phone phone must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
-          id="number"
+          id="phone"
         />
       </Box>
       <SubmitButton type="submit">Add contact</SubmitButton>

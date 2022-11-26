@@ -15,4 +15,6 @@ export const FilterInput = styled.input`
   width: 350px;
 `;
 
-export const DeleteBtn = styled.button``;
+export const DeleteBtn = styled.button`
+  margin-left: 10px;
+`;
