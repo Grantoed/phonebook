@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeFilter } from 'redux/slices';
-import { fetch, remove } from 'redux/operations';
+import { changeFilter } from 'redux/contacts/slices';
+import { fetch, remove } from 'redux/contacts/operations';
 import {
   selectVisibleContacts,
   selectIsLoading,
   selectFilter,
-} from 'redux/selectors';
+} from 'redux/contacts/selectors';
 import {
   ContactsList,
   ContactsItem,
@@ -46,10 +46,10 @@ export const Contacts = () => {
       />
       {isLoading && <div>Loading...</div>}
       <ContactsList>
-        {contacts.map(({ name, phone, id }) => {
+        {contacts.map(({ name, number, id }) => {
           return (
             <ContactsItem key={id}>
-              {name}: {phone}
+              {name}: {number}
               <DeleteBtn type="button" onClick={() => deleteContact(id)}>
                 Delete
               </DeleteBtn>

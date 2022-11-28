@@ -1,5 +1,5 @@
-import { createSlice, combineReducers } from '@reduxjs/toolkit';
-import { fetch, add, remove } from './operations';
+import { createSlice } from '@reduxjs/toolkit';
+import { fetch, add, remove } from '../contacts/operations';
 
 const handlePending = state => {
   state.isLoading = true;
@@ -54,12 +54,7 @@ const filterSlice = createSlice({
   },
 });
 
-const contactsReducer = contactsSlice.reducer;
-const filterReducer = filterSlice.reducer;
+export const contactsReducer = contactsSlice.reducer;
+export const filterReducer = filterSlice.reducer;
 
 export const { changeFilter } = filterSlice.actions;
-
-export const rootReducer = combineReducers({
-  contacts: contactsReducer,
-  filter: filterReducer,
-});
