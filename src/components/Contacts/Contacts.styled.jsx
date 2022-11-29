@@ -1,4 +1,6 @@
-import styled from 'styled-components';
+import styled from '@emotion/styled';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableRow from '@mui/material/TableRow';
 
 export const ContactsList = styled.ul``;
 export const ContactsItem = styled.li`
@@ -7,14 +9,22 @@ export const ContactsItem = styled.li`
   }
 `;
 
-export const FilterLabel = styled.label`
-  margin-bottom: 15px;
-`;
+export const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.common.white,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
 
-export const FilterInput = styled.input`
-  width: 350px;
-`;
-
-export const DeleteBtn = styled.button`
-  margin-left: 10px;
-`;
+export const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  '&:nth-of-type(odd)': {
+    backgroundColor: theme.palette.action.hover,
+  },
+  // hide last border
+  '&:last-child td, &:last-child th': {
+    border: 0,
+  },
+}));

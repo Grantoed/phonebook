@@ -1,16 +1,23 @@
 import { Box } from 'components/Box';
 import { Section } from 'components/Section/Section';
 import { Form } from 'components/Form/Form';
-import { Contacts } from 'components/Contacts/Contacts';
+import MaterialContacts from 'components/Contacts/MaterialContacts';
 
 export const ContactsPage = () => {
   return (
-    <Box width="400px">
+    <Box
+      display="flex"
+      alignItems="flex-start"
+      justifyContent="center"
+      width="75vw"
+      ml="auto"
+      mr="auto"
+    >
       <Section title="Phonebook">
         <Form />
       </Section>
       <Section title="Contacts">
-        <Contacts />
+        <MaterialContacts />
       </Section>
     </Box>
   );

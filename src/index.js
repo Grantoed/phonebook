@@ -6,7 +6,7 @@ import { App } from 'components/App';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistor } from './redux/store';
 import './index.css';
-import { ThemeProvider } from 'styled-components';
+import { ThemeProvider } from '@mui/material/styles';
 import { theme } from './components/theme.jsx';
 import { store } from './redux/store';
 
